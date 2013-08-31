@@ -6,8 +6,8 @@ cd "$(dirname "$0")"
 
 # Zenity stuff
 ZENITY="zenity"
-[[ -f PVHUD/zenity_provider ]] && \
-	ZENITY="$(cat PVHUD/zenity_provider)"
+[[ -f pvhud/zenity_provider ]] && \
+	ZENITY="$(cat pvhud/zenity_provider)"
 
 # PVHUD download url
 PV_URL="http://dl.dropbox.com/u/1565165/pvhud_dl.html"
@@ -17,8 +17,8 @@ PV_URL="http://dl.dropbox.com/u/1565165/pvhud_dl.html"
 # look at installation status
 pv_getlocalstatus() {
 	PV_LOCAL_VER=0
-	[[ -f PVHUD/HUDversion.txt ]] && \
-		PV_LOCAL_VER="$(cat PVHUD/HUDversion.txt)"
+	[[ -f pvhud/HUDversion.txt ]] && \
+		PV_LOCAL_VER="$(cat pvhud/HUDversion.txt)"
 	printf "Local: ${PV_LOCAL_VER}\n"
 }
 # grab the html
@@ -58,7 +58,7 @@ pv_mainview() {
 }
 # are we re-installing?
 pv_chkdl() {
-	mkdir -p PVHUD
+	mkdir -p pvhud
 	if [ $PV_REINSTALL = 1 ]; then
 		"${ZENITY}" --title="zPVHUD Updater" --question --text="Would you like to re-download the HUD as well?"
 		return $?
@@ -70,7 +70,7 @@ pv_chkdl() {
 pv_dlhud() {
 	pv_chkdl
 	if [ $? = 0 ]; then
-		wget --progress=bar:force -O PVHUD/HUDfiles.zip "${PV_ZIP_URL}" 2>&1 | \
+		wget --progress=bar:force -O pvhud/HUDfiles.zip "${PV_ZIP_URL}" 2>&1 | \
 		"${ZENITY}" --title="zPVHUD" --text="Downloading the HUD..." --progress --auto-close --auto-kill
 		return $?
 	else
@@ -80,15 +80,15 @@ pv_dlhud() {
 }
 # install the HUD
 pv_installhud() {
-	unzip -qo PVHUD/HUDfiles.zip && \
+	unzip -qo pvhud/HUDfiles.zip && \
 		"${ZENITY}" --title="zPVHUD" --info --text="Successfully installed PVHUD!"
-	printf "${PV_REMOTE_VER}" > PVHUD/HUDversion.txt
+	printf "${PV_REMOTE_VER}" > pvhud/HUDversion.txt
 }
 # un-install the HUD
 pv_uninstallhud() {
 	if [ $PV_LOCAL_VER != 0 ]; then
 		"${ZENITY}" --title="zPVHUD" --question --text="Would you like to un-install the HUD?" && \
-		rm -rf resource/ scripts/ PVHUD/ && \
+		rm -rf pvhud/ && \
 		"${ZENITY}" --title="zPVHUD" --info --text="Successfully un-installed PVHUD!"
 	fi
 }
