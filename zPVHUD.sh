@@ -80,7 +80,7 @@ pv_dlhud() {
 }
 # install the HUD
 pv_installhud() {
-	unzip -qo pvhud/HUDfiles.zip -d custom/ && \
+	unzip -qo pvhud/HUDfiles.zip && \
 		"${ZENITY}" --title="zPVHUD" --info --text="Successfully installed PVHUD!"
 	printf "${PV_REMOTE_VER}" > pvhud/HUDversion.txt
 }
