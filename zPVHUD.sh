@@ -2,7 +2,7 @@
 # zPVHUD, a Zenity-powered PVHUD update script by meklu
 
 # First cd'ing to the dir we reside in
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/custom"
 
 # Zenity stuff
 ZENITY="zenity"
