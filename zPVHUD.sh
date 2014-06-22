@@ -31,7 +31,7 @@ pv_parsehtml() {
 	PV_ZIP_URL="$(printf "${PV_HTML}" | \
 			grep -B 1 DOWNLOAD | \
 			head -n 1 | \
-			sed "s/<a href='//g;s/'>//g")"
+			sed "s/<a href='//g;s/'>//g;s/\r//g")"
 	printf "Archive URL: ${PV_ZIP_URL}\n"
 	PV_REMOTE_VER="$(printf "${PV_HTML}" | \
 			grep "^PVHUD v" | \
